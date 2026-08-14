@@ -55,5 +55,11 @@
   "bugs": {
     "url": "https://github.com/zerro-223/dsh-token-usage/issues"
   },
-  "author": "zerro-223"
+  "author": "zerro-223",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
 }
