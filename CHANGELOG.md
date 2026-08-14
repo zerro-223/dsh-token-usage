@@ -9,6 +9,11 @@ All notable changes to this project are documented in this file.
   USD per 1M tokens) are configured in the in-panel pricing dialog and
   persisted to `~/.dsh/storages/token-stats/prices.json`; the overview API
   returns `cost` (usd + unknownModels).
+- Automatic price sync from [modelradar.cn](https://modelradar.cn) (machine
+  readable `/data/models.json`): fetched on boot and refreshed daily,
+  cached to `prices-auto.json`; manual prices always override the auto
+  table. The pricing dialog shows the data source, last update, per-row
+  auto/manual tags and a manual refresh button.
 
 ### Changed
 - Total-tokens stat card hint now shows a Chinese-unit approximation with two
