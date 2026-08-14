@@ -11,8 +11,8 @@ All notable changes to this project are documented in this file.
   returns `cost` (usd + unknownModels).
 
 ### Changed
-- Total-tokens stat card hint now shows a Chinese-unit approximation
-  (≈11万 / ≈11亿) instead of the literal "input + output + cache" text.
+- Total-tokens stat card hint now shows a Chinese-unit approximation with two
+  decimals (≈11.11万 / ≈11.11亿) instead of the literal "input + output + cache" text.
 
 ## [1.0.0] - 2026-08-14
 
