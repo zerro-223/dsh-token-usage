@@ -3,4 +3,4 @@
 # package to the profile's layer stack automatically (reconcilePlugins).
 - insert:
     - id: token-usage
-      name: 'dsh-token-usage'
+      name: '@zerro223/dsh-token-usage'

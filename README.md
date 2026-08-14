@@ -1,11 +1,11 @@
-# dsh-token-usage — DSH Token 用量统计插件
+# @zerro223/dsh-token-usage — DSH Token 用量统计插件
 
 在 DeepSeek Harness Web UI 的侧边栏底部（设置按钮旁）增加「Token 用量」入口，
 打开一个统计面板，按 **API（provider）**、**模型** 和 **日期** 分类展示模型调用的
 Token 消耗，并配有流畅的入场/更新动画（数字滚动、柱状图生长、环形图描边、
 逐项 stagger），自动适配深色/浅色主题（复用 DSH 的 `--dsw-*` 设计令牌）。
 
-> npm 上的 `dsh-token-stats` 名称已被其他作者占用，本包名为 `dsh-token-usage`。
+> npm 上的 `dsh-token-stats` 名称已被其他作者占用，本包名为 `@zerro223/dsh-token-usage`。
 
 ## 工作原理
 
@@ -31,7 +31,7 @@ Token 消耗，并配有流畅的入场/更新动画（数字滚动、柱状图�
 ### 方式一：已发布到 npm 后（推荐）
 
 ```sh
-dsh plugin --profile web add dsh-token-usage
+dsh plugin --profile web add @zerro223/dsh-token-usage
 ```
 
 包声明了 `dsh.bundle.patch`，`dsh plugin` 会在 pnpm 安装后自动把它加入
@@ -40,15 +40,15 @@ profile 的 layer 栈（无需手动改 `cordis.patch.yml`）。重启 DSH Web �
 
 ### 方式二：本地源码安装
 
-1. 将 `dsh-token-usage` 目录复制到 profile 的 `node_modules`：
+1. 将 `@zerro223/dsh-token-usage` 目录复制到 profile 的 `node_modules`：
    ```
-   C:\Users\<you>\.dsh\profiles\web\node_modules\dsh-token-usage\
+   C:\Users\<you>\.dsh\profiles\web\node_modules\@zerro223/dsh-token-usage\
    ```
 2. 在 `C:\Users\<you>\.dsh\profiles\web\cordis.patch.yml` 中追加：
    ```yaml
    - insert:
        - id: token-usage
-         name: 'dsh-token-usage'
+         name: '@zerro223/dsh-token-usage'
    ```
 3. 重启 DSH Web（`dsh web`），打开 `http://127.0.0.1:3080`。
 
@@ -56,10 +56,10 @@ profile 的 layer 栈（无需手动改 `cordis.patch.yml`）。重启 DSH Web �
 
 ```sh
 # 本地目录（file: 协议，绝对路径或相对路径均可）
-dsh plugin --profile web add file:D:/path/to/dsh-token-usage
+dsh plugin --profile web add file:D:/path/to/@zerro223/dsh-token-usage
 
 # GitHub 仓库（需要 allowBuilds 时按 pnpm 提示配置）
-dsh plugin --profile web add github:your-name/dsh-token-usage
+dsh plugin --profile web add github:your-name/@zerro223/dsh-token-usage
 ```
 
 ## 开源与发布（npm + GitHub）
@@ -70,7 +70,7 @@ dsh plugin --profile web add github:your-name/dsh-token-usage
 git init
 git add .
 git commit -m "feat: token usage statistics plugin"
-git remote add origin https://github.com/<you>/dsh-token-usage.git
+git remote add origin https://github.com/<you>/@zerro223/dsh-token-usage.git
 git push -u origin main
 ```
 
