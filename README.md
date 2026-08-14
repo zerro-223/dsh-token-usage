@@ -32,7 +32,7 @@ Token 消耗，并配有流畅的入场/更新动画（数字滚动、柱状图�
 
 ## 安装
 
-### 方式一：已发布到 npm 后（推荐）
+### 方式一：npm 安装（推荐）
 
 ```sh
 dsh plugin --profile web add @zerro223/dsh-token-usage
@@ -56,7 +56,7 @@ profile 的 layer 栈（无需手动改 `cordis.patch.yml`）。重启 DSH Web �
    ```
 3. 重启 DSH Web（`dsh web`），打开 `http://127.0.0.1:3080`。
 
-### 方式三：本地目录 / git 直接安装（无需发布）
+### 方式三：本地目录 / Git 仓库安装
 
 ```sh
 # 本地目录（file: 协议，绝对路径或相对路径均可）
