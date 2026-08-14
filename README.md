@@ -1,5 +1,9 @@
 # @zerro223/dsh-token-usage — DSH Token 用量统计插件
 
+[![npm version](https://img.shields.io/npm/v/@zerro223/dsh-token-usage.svg)](https://www.npmjs.com/package/@zerro223/dsh-token-usage)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![GitHub](https://img.shields.io/badge/GitHub-zerro--223%2Fdsh--token--usage-181717?logo=github)](https://github.com/zerro-223/dsh-token-usage)
+
 在 DeepSeek Harness Web UI 的侧边栏底部（设置按钮旁）增加「Token 用量」入口，
 打开一个统计面板，按 **API（provider）**、**模型** 和 **日期** 分类展示模型调用的
 Token 消耗，并配有流畅的入场/更新动画（数字滚动、柱状图生长、环形图描边、
@@ -56,70 +60,11 @@ profile 的 layer 栈（无需手动改 `cordis.patch.yml`）。重启 DSH Web �
 
 ```sh
 # 本地目录（file: 协议，绝对路径或相对路径均可）
-dsh plugin --profile web add file:D:/path/to/@zerro223/dsh-token-usage
+dsh plugin --profile web add file:D:/path/to/dsh-token-usage
 
 # GitHub 仓库（需要 allowBuilds 时按 pnpm 提示配置）
-dsh plugin --profile web add github:your-name/@zerro223/dsh-token-usage
+dsh plugin --profile web add github:zerro-223/dsh-token-usage
 ```
-
-## 开源与发布（npm + GitHub）
-
-### 1. 推到 GitHub
-
-```sh
-git init
-git add .
-git commit -m "feat: token usage statistics plugin"
-git remote add origin https://github.com/<you>/@zerro223/dsh-token-usage.git
-git push -u origin main
-```
-
-发布前记得：
-- 在 `package.json` 补上 `repository` 字段指向你的仓库；
-- 可选：GitHub Releases + 自动发布（见下文 CI）。
-
-### 2. 发布到 npm
-
-```sh
-npm login                     # 首次需要，npm 账号
-npm version patch             # 打版本号（1.0.0 -> 1.0.1）
-npm publish                   # 发布
-```
-
-发布前用 `npm pack --dry-run` 检查包里包含哪些文件（`files` 白名单：
-`lib`、`cordis.patch.yml`、`README.md`、`LICENSE`）。
-
-### 3. 可选：GitHub Actions 自动发布
-
-`.github/workflows/publish.yml`：
-
-```yaml
-name: Publish to npm
-on:
-  push:
-    tags: ['v*']
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-```
-
-打 tag 即发布：`git tag v1.0.0 && git push --tags`。
-
-### 版本兼容性提示
-
-- 依赖 `@deepseek-ai/dsh-home-paths`（node half 使用）与 `@deepseek-ai/cordis`
-  已在 `peerDependencies` 声明，DSH 自带这些包，使用者无需额外安装。
-- 浏览器端 require 的 `react` / `@deepseek-ai/dsh-client-ui-primitives` 等由
-  DSH Web 的平台模块表提供，无需 npm 安装。
 
 ## 数据
 
