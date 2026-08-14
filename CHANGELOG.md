@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 
 ## [1.0.1] - 2026-08-14
 
+### Added
+- Estimated cost card (USD): per-model prices (input / output / cache read,
+  USD per 1M tokens) are configured in the in-panel pricing dialog and
+  persisted to `~/.dsh/storages/token-stats/prices.json`; the overview API
+  returns `cost` (usd + unknownModels).
+
 ### Changed
 - Total-tokens stat card hint now shows a Chinese-unit approximation
   (≈11万 / ≈11亿) instead of the literal "input + output + cache" text.
