@@ -1,0 +1,6 @@
+# dsh-token-usage bundle patch: activates the plugin row in the loader.
+# Bundled so that `dsh plugin --profile web add dsh-token-usage` joins this
+# package to the profile's layer stack automatically (reconcilePlugins).
+- insert:
+    - id: token-usage
+      name: 'dsh-token-usage'

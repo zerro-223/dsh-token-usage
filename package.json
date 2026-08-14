@@ -1,0 +1,59 @@
+{
+  "name": "dsh-token-usage",
+  "version": "1.3.4",
+  "description": "Token usage statistics for the DeepSeek Harness Web UI: captures per-request LLM usage from the llm/stream waterfall, persists it, and renders animated charts grouped by API (provider), model, and date.",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "plugin",
+    "token",
+    "usage",
+    "statistics",
+    "llm",
+    "web-ui"
+  ],
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "pack": "npm pack --dry-run"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-primitives"
+      ],
+      "platform": "web"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-home-paths": "^0.1.0-rc.6",
+    "react": "^18.0.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zerro-223/dsh-token-usage.git"
+  },
+  "homepage": "https://github.com/zerro-223/dsh-token-usage#readme",
+  "bugs": {
+    "url": "https://github.com/zerro-223/dsh-token-usage/issues"
+  },
+  "author": "zerro-223"
+}
