@@ -11,19 +11,19 @@ Token 消耗，并配有流畅的入场/更新动画（数字滚动、柱状图�
 
 ## 界面预览
 
-![曲线图](曲线图.png)
+![曲线图](https://raw.githubusercontent.com/zerro-223/dsh-token-usage/main/%E6%9B%B2%E7%BA%BF%E5%9B%BE.png)
 
 *趋势图：输入 / 输出 / 缓存命中 / 成本曲线*
 
-![热力图](热力图.png)
+![热力图](https://raw.githubusercontent.com/zerro-223/dsh-token-usage/main/%E7%83%AD%E5%8A%9B%E5%9B%BE.png)
 
 *每日用量热力图：近一年按天展示 Token 用量*
 
-![模型汇总与最近请求](模型汇总与最近请求.png)
+![模型汇总与最近请求](https://raw.githubusercontent.com/zerro-223/dsh-token-usage/main/%E6%A8%A1%E5%9E%8B%E6%B1%87%E6%80%BB%E4%B8%8E%E6%9C%80%E8%BF%91%E8%AF%B7%E6%B1%82.png)
 
 *模型汇总与最近请求：按模型统计，支持导出*
 
-![模型价格配置](模型价格配置.png)
+![模型价格配置](https://raw.githubusercontent.com/zerro-223/dsh-token-usage/main/%E6%A8%A1%E5%9E%8B%E4%BB%B7%E6%A0%BC%E9%85%8D%E7%BD%AE.png)
 
 *模型价格配置：自动同步价格，支持手动覆盖*
 
