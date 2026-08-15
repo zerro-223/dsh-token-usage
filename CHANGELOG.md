@@ -2,14 +2,29 @@
 
 All notable changes to this project are documented in this file.
 
-## [Unreleased]
+## [1.1.0] - 2026-08-15
 
 ### Added
-- New "5小时" range preset (last 5 hours) as the default view; the existing
-  "当日" range now shows the whole current day (00:00 to current hour).
+- Custom date range preset (max 30 days) for the stats panel.
+- Model summary table below the heatmap; click a row to filter by model.
+- Data export from the recent requests card: JSON (full data), CSV (recent
+  requests), CSV (model summary).
+- Cost curve in the trend chart with its own right-side USD axis.
+- Lightweight `/token-stats/api/heatmap` endpoint for the daily usage heatmap.
+- "5小时" range preset as the new default view; "当日" now shows the full
+  current day.
+- Automatic compaction of `usage.jsonl` when it grows too large.
 
 ### Changed
-- Default date range is now 5 hours instead of Today.
+- Trend chart now smoothly morphs between old and new curves when switching
+  ranges/filters.
+- Heatmap now refreshes via the lightweight endpoint (60s interval).
+- Price panel auto-matching also matches provider-prefixed model ids by
+  normalized key / basename / display name.
+- Modal dialog now traps focus and restores focus on close for better
+  accessibility.
+- Number count-up animation now continues from the current displayed value
+  instead of jumping back.
 
 ## [1.0.2] - 2026-08-15
 

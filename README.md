@@ -9,24 +9,33 @@
 Token 消耗，并配有流畅的入场/更新动画（数字滚动、柱状图生长、环形图描边、
 逐项 stagger），自动适配深色/浅色主题（复用 DSH 的 `--dsw-*` 设计令牌）。
 
-> npm 上的 `dsh-token-stats` 名称已被其他作者占用，本包名为 `@zerro223/dsh-token-usage`。
-
 ## 界面预览
 
-![主界面截图](https://raw.githubusercontent.com/zerro-223/dsh-token-usage/main/%E4%B8%BB%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE.png)
+![曲线图](曲线图.png)
 
-![主界面 2](https://raw.githubusercontent.com/zerro-223/dsh-token-usage/main/%E4%B8%BB%E7%95%8C%E9%9D%A22.png)
+*趋势图：输入 / 输出 / 缓存命中 / 成本曲线*
 
-![模型价格配置界面](https://raw.githubusercontent.com/zerro-223/dsh-token-usage/main/%E6%A8%A1%E5%9E%8B%E4%BB%B7%E6%A0%BC%E9%85%8D%E7%BD%AE%E7%95%8C%E9%9D%A2.png)
+![热力图](热力图.png)
+
+*每日用量热力图：近一年按天展示 Token 用量*
+
+![模型汇总与最近请求](模型汇总与最近请求.png)
+
+*模型汇总与最近请求：按模型统计，支持导出*
+
+![模型价格配置](模型价格配置.png)
+
+*模型价格配置：自动同步价格，支持手动覆盖*
 
 ## 工作原理
 
 - **Node 端**（`lib/index.js`）：监听 `llm/stream` waterfall 事件，捕获每次
   模型调用的 `usage` chunk（输入 / 输出 / 缓存读 / 缓存写 / 推理 tokens），
   逐条追加持久化到 `~/.dsh/storages/token-stats/usage.jsonl`，并通过
-  `/token-stats/api/overview?days=hour|7|month|30&provider=xxx&model=xxx`
+  `/token-stats/api/overview?days=5h|hour|7|month|30|custom&start=...&end=...&provider=xxx&model=xxx`
   提供聚合结果（时间序列 `series`、统计 `totals`、缓存命中率
-  `cacheHitRate`、筛选下拉选项 `filterOptions`）。
+  `cacheHitRate`、筛选下拉选项 `filterOptions`）；另提供轻量
+  `/token-stats/api/heatmap?days=364` 接口供热力图使用。
 - **浏览器端**（`lib/client.js`）：注册 `sidebar.footer.action` 槽位
   （id `token-usage`），点击后打开统计面板：
   - 6 张统计卡：总 Tokens、请求数、输入、输出（含推理提示）、总命中率、估算成本（USD）
@@ -37,13 +46,15 @@ Token 消耗，并配有流畅的入场/更新动画（数字滚动、柱状图�
     （294 个模型里 183 个为 CNY），插件统一取数据集的 `*PriceUsdPer1M` 换算字段
     存成 USD，CNY 来源的模型在面板中标注「自动·源CNY」；「$」按钮可查看自动匹配结果、
     按名称搜索模型、手动覆盖或强制刷新；手动价格优先于自动价格，未定价模型会在成本卡上提示
-  - 大趋势图：按「输入(深蓝) / 输出(琥珀) / 缓存命中(绿)」三色平滑曲线（单调插值，
-    无过冲越界）+ 渐变面积，三条曲线共用统一 y 轴，带刻度与单位（M/K token）；
-    支持区间切换（5小时 / 当日（0点至当前）按小时粒度、近7天、当月、近30天按天粒度），x 轴按整段
-    横轴均分，悬停显示十字线与明细；切换 API / 模型 / 日期范围时会重新播放曲线动画
+  - 大趋势图：按「输入(深蓝) / 输出(琥珀) / 缓存命中(绿) / 成本(红)」四条平滑曲线（单调插值，
+    无过冲越界）+ 渐变面积；Token 曲线共用左侧 y 轴，成本曲线使用右侧 `$` y 轴；
+    支持区间切换（5小时 / 当日 / 近7天 / 当月 / 近30天 / 自定义（最长30天）），
+    x 轴按整段横轴均分，悬停显示十字线与明细；切换 API / 模型 / 日期范围时会平滑过渡曲线
   - 每日用量热力图（GitHub Contribution 风格）：近一年（52 周）按天展示 Token 用量，
     左侧带周几标识，蓝色越深表示当天用量越高，悬停可查看具体日期与用量；
     跟随当前 API / 模型筛选
+  - 模型汇总表：按模型展示请求数、输入、输出、缓存命中、估算成本；点击行可筛选图表
+  - 数据导出：最近请求卡片右上角支持导出 JSON（完整数据）、CSV（最近请求）、CSV（模型汇总）
   - 模型 / API 筛选：只查看指定模型或提供方的数据（统计卡与图表同步过滤）
   - 最近请求：最新 30 条调用记录（时间 / API / 模型 / tokens）
   - 每 15 秒自动刷新，也可手动刷新
@@ -88,6 +99,7 @@ dsh plugin --profile web add github:zerro-223/dsh-token-usage
 
 - 存储位置：`~/.dsh/storages/token-stats/usage.jsonl`（每请求一行 JSON）。
 - 内存上限：最近 50 万条记录（超出时丢弃最旧）。
+- 文件超过 128MB 会自动压缩为最近 50 万条，避免磁盘无限增长。
 - 重试 / 重复请求：每次真实到达 provider 的调用都会记录（`llm/stream`
   瀑布每次调用触发一次；llm-retry 的重试经由 agent loop 的
   `agent/request-error` 重新发起请求，因此每次尝试都会计入）。
