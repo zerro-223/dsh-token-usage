@@ -4,9 +4,12 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
-### Fixed
-- "当日" range now shows the whole current day in the chart (hourly from
-  00:00 to the current hour), matching the statistics cards.
+### Added
+- New "5小时" range preset (last 5 hours) as the default view; the existing
+  "当日" range now shows the whole current day (00:00 to current hour).
+
+### Changed
+- Default date range is now 5 hours instead of Today.
 
 ## [1.0.2] - 2026-08-15
 
