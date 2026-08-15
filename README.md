@@ -1,4 +1,4 @@
-# @zerro223/dsh-token-usage — DSH Token 用量统计插件
+# dsh-token-usage — DSH Token 用量统计插件
 
 [![npm version](https://img.shields.io/npm/v/@zerro223/dsh-token-usage.svg)](https://www.npmjs.com/package/@zerro223/dsh-token-usage)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
