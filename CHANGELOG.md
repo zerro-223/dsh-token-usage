@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [Unreleased]
+
+### Fixed
+- "当日" range now shows the whole current day in the chart (hourly from
+  00:00 to the current hour), matching the statistics cards.
+
 ## [1.0.2] - 2026-08-15
 
 ### Added
