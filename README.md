@@ -13,11 +13,11 @@ Token 消耗，并配有流畅的入场/更新动画（数字滚动、柱状图�
 
 ## 界面预览
 
-![主界面截图](主界面截图.png)
+![主界面截图](https://raw.githubusercontent.com/zerro-223/dsh-token-usage/main/%E4%B8%BB%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE.png)
 
-![主界面 2](主界面2.png)
+![主界面 2](https://raw.githubusercontent.com/zerro-223/dsh-token-usage/main/%E4%B8%BB%E7%95%8C%E9%9D%A22.png)
 
-![模型价格配置界面](模型价格配置界面.png)
+![模型价格配置界面](https://raw.githubusercontent.com/zerro-223/dsh-token-usage/main/%E6%A8%A1%E5%9E%8B%E4%BB%B7%E6%A0%BC%E9%85%8D%E7%BD%AE%E7%95%8C%E9%9D%A2.png)
 
 ## 工作原理
 
