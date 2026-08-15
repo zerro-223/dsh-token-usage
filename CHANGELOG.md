@@ -2,6 +2,24 @@
 
 All notable changes to this project are documented in this file.
 
+## [Unreleased]
+
+### Added
+- Daily usage contribution heatmap (GitHub-style, last 52 weeks / one year)
+  below the trend chart; cell blue intensity reflects that day's total token
+  usage, with weekday labels on the left and centered card content.
+
+### Changed
+- Price panel now includes models from the auto price table even if they have
+  not appeared in usage yet; search also matches model display names.
+- Trend chart now uses a single unified y-axis; the three curves are labeled
+  input / output / cache hit (previously "uncached input" on a separate right
+  axis).
+- Trend chart replays its draw/fade animation when the data changes (for
+  example when switching API, model or date range), not only on first open.
+- Heatmap cells now use a custom hover tooltip instead of the native `title`
+  tooltip, avoiding an intermittent blank/black tooltip after repeated hovers.
+
 ## [1.0.1] - 2026-08-15
 
 ### Added
