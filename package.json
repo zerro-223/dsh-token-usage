@@ -26,7 +26,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "pack": "npm pack --dry-run"
+    "pack": "npm pack --dry-run",
+    "test": "node --test"
   },
   "dsh": {
     "bundle": {
