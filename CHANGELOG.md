@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented in this file.
 
-## [Unreleased]
+## [1.0.2] - 2026-08-15
 
 ### Added
 - Daily usage contribution heatmap (GitHub-style, last 52 weeks / one year)
