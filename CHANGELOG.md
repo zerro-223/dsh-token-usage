@@ -2,6 +2,74 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.0.5] - 2026-08-15
+
+### Fixed
+- Stat cards: the grid still laid out 8 columns after the two cache cards
+  were removed, leaving two empty cells; it now spans exactly the 6 cards
+  (3 columns on narrow screens).
+
+### Changed
+- Auto-price boot refresh now retries with backoff (3s, then every 20s up to
+  3 times) instead of giving up after one attempt, so a transient network
+  failure at boot no longer leaves the pricing dialog empty until the next
+  day.
+- Pricing dialog surfaces failures instead of failing silently: an API
+  unreachable/404 state, a failed auto refresh (with the error message), and
+  the "auto prices not fetched yet" state are all shown as an inline warning.
+
+## [1.0.4] - 2026-08-15
+
+### Fixed
+- **Currency bug in auto prices**: modelradar.cn prices every model in its
+  native currency (183 of 294 models are CNY — DeepSeek, Kimi, Moonshot, …),
+  and the plugin previously stored the native fields as USD, inflating cost
+  by the CNY→USD factor (~7x for DeepSeek). Auto prices now always use the
+  dataset per-field `*PriceUsdPer1M` conversions (native price is kept as
+  a fallback only for USD-native models), and rows sourced from CNY prices
+  are tagged `auto·CNY` in the pricing dialog.
+
+### Changed
+- Cache-write price column added to the pricing dialog and to the cost
+  estimate (`cacheWriteTokens` are now billed when a price is known, e.g.
+  Anthropic); manual price rows accept cache-write too.
+- Pricing dialog: search box to filter models, and a "no matching models"
+  state.
+- Auto-price matching now also indexes provider-prefixed model ids by
+  basename ("openai/gpt-5.6-sol" matches the radar row "gpt-5.6-sol").
+- Cache-read stat card removed (same rationale as cache write: DeepSeek and
+  most providers report no separate cache-read card value worth a card);
+  the trend chart cache-hit curve and recent-list chips are unaffected.
+
+## [1.0.3] - 2026-08-15
+
+### Removed
+- The cache-write stat card: DeepSeek and most other providers never report
+  a cache-write metric (only Pi AI fills `usage.cacheWrite`), so the card
+  was permanently 0 for them. `cacheWriteTokens` is still captured and
+  persisted (and still counts toward the total-tokens card) for providers
+  that do report it.
+
+## [1.0.2] - 2026-08-15
+
+### Changed
+- Persistence is now async and batched (`appendFile` on a serialized promise
+  chain, flushed every second or as soon as 64 rows pile up, plus a final
+  flush on plugin dispose) instead of one blocking `appendFileSync` per
+  model call.
+- History loading reads only the tail of `usage.jsonl` (backward chunked
+  reads, capped at the newest 500k rows) instead of parsing the whole file
+  on boot.
+- Capture and load now apply the same row filter; cache-only rows
+  (`cacheReadTokens` / `cacheWriteTokens` > 0 with zero input/output) are
+  kept on both paths instead of being lost after a restart.
+- Fixed an abort-timer cleanup gap in the ModelRadar refresh: the 15s
+  timeout is now cleared on every exit path.
+- Removed dead code in the browser half (`useMounted`, `PALETTE`,
+  unused `.ts-triggerBadge` CSS) and corrected the retry explanation to
+  match the official docs (`dsh-llm-retry` does not wrap `llm/stream`;
+  retries are new requests scheduled through `agent/request-error`).
+
 ## [1.0.1] - 2026-08-14
 
 ### Added

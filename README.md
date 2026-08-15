@@ -21,11 +21,14 @@ Token 消耗，并配有流畅的入场/更新动画（数字滚动、柱状图�
   `cacheHitRate`、筛选下拉选项 `filterOptions`）。
 - **浏览器端**（`lib/client.js`）：注册 `sidebar.footer.action` 槽位
   （id `token-usage`），点击后打开统计面板：
-  - 8 张统计卡：总 Tokens、请求数、输入、输出（含推理提示）、缓存读、缓存写、总命中率、估算成本（USD）
-  - 成本估算：按模型单价（$ / 100万 tokens，输入 / 输出 / 缓存读）× 实际用量计算；
+  - 6 张统计卡：总 Tokens、请求数、输入、输出（含推理提示）、总命中率、估算成本（USD）
+    （DeepSeek 等多数 provider 不报告 cache 读写明细，故不单列缓存卡片）
+  - 成本估算：按模型单价（$ / 100万 tokens，输入 / 输出 / 缓存读 / 缓存写）× 实际用量计算；
     价格自动同步自 [modelradar.cn](https://modelradar.cn)（启动时拉取 + 每日刷新，
-    缓存于 `prices-auto.json`），「$」按钮可查看自动匹配结果、手动覆盖或强制刷新；
-    手动价格优先于自动价格，未定价模型会在成本卡上提示
+    缓存于 `prices-auto.json`）。注意单位：modelradar 数据集按模型原生币种计价
+    （294 个模型里 183 个为 CNY），插件统一取数据集的 `*PriceUsdPer1M` 换算字段
+    存成 USD，CNY 来源的模型在面板中标注「自动·源CNY」；「$」按钮可查看自动匹配结果、
+    按名称搜索模型、手动覆盖或强制刷新；手动价格优先于自动价格，未定价模型会在成本卡上提示
   - 大趋势图：按「未命中输入(深蓝) / 缓存命中(绿) / 输出(琥珀)」三色平滑曲线（单调插值，
     无过冲越界）+ 渐变面积，y 轴带刻度与单位（M/K token）；支持区间切换
     （当日近5小时按小时粒度、近7天、当月、近30天按天粒度），x 轴按整段
@@ -75,7 +78,8 @@ dsh plugin --profile web add github:zerro-223/dsh-token-usage
 - 存储位置：`~/.dsh/storages/token-stats/usage.jsonl`（每请求一行 JSON）。
 - 内存上限：最近 50 万条记录（超出时丢弃最旧）。
 - 重试 / 重复请求：每次真实到达 provider 的调用都会记录（`llm/stream`
-  位于 llm-retry 内部，重试的每次尝试都计入）。
+  瀑布每次调用触发一次；llm-retry 的重试经由 agent loop 的
+  `agent/request-error` 重新发起请求，因此每次尝试都会计入）。
 - 卸载插件不会删除历史数据；重新启用即恢复统计。
 
 ## 开发
