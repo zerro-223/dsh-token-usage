@@ -2,6 +2,50 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.1] - 2026-08-22
+
+### Added
+- New range presets "近90天" and "今年" for the trend chart.
+- JSONL export of the full history (`/token-stats/api/export`, streamed) and a
+  "JSON (current view)" export next to the existing CSV exports.
+- Two-step "clear all history" action in the export menu
+  (`/token-stats/api/clear`).
+- Cache-write column in the model summary table; session/purpose tooltip on
+  recent request rows.
+
+### Changed
+- Aggregation is now a single pass over the record window (buckets, totals,
+  per-model rows, recent list and filter options computed together) with
+  per-model price lookup caching: a 500k-record overview build dropped from
+  ~300ms to ~75-130ms and no longer allocates per-model record arrays.
+- Failed persistence batches are retried with capped backoff instead of being
+  dropped on the first transient disk error.
+- Compaction merges the on-disk tail with the in-memory window (deduped by
+  row key) before rewriting, so profiles sharing the storage cannot lose each
+  other's rows; the rewrite is streamed in bounded chunks instead of one giant
+  joined string.
+- The plugin still requires `webServer` (this cordis fork has no optional
+  inject), so capture/API run where a web service exists, and profiles that
+  share the storage never lose each other's rows (disk-level merge).
+- Trend chart renders a visible dot marker for a single-point series (e.g.
+  "当日" at midnight or a 1-day custom range) instead of an invisible
+  zero-length path.
+- Trend chart legend items toggle a series on/off (the shared per-axis max
+  rescales accordingly), so curves that overlap by shape (cache hit vs cost)
+  can be studied separately.
+- Overview polling skips background refreshes while the tab is hidden and
+  never overlaps in-flight requests; the refresh icon only spins on manual
+  refreshes.
+- Recent requests card now lists all 30 rows (scrollable) instead of 8.
+- Empty-state skeleton for the heatmap card prevents layout shift on first
+  open; the legend dashes the cache-hit swatch.
+- Header (range tabs / filters) always wraps onto dedicated rows so the title
+  is never squeezed or covered by the tabs; the range tabs wrap too. Dead CSS
+  rules removed.
+- Trend chart interpolation now applies the Fritsch-Carlson slope bound on
+  both the static curve and the morph sampler, and clamps values at render, so
+  curves can no longer dip below the zero axis on sharp drops.
+
 ## [1.1.0] - 2026-08-15
 
 ### Added

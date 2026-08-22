@@ -1,6 +1,6 @@
 {
   "name": "@zerro223/dsh-token-usage",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Token usage statistics for the DeepSeek Harness Web UI: captures per-request LLM usage from the llm/stream waterfall, persists it, and renders animated charts grouped by API (provider), model, and date.",
   "keywords": [
     "deepseek-harness",
